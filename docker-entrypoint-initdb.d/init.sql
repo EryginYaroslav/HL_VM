@@ -36,8 +36,8 @@ VALUES
     ('йога', 45, 'легкая');
 
 -- Вставка тестовых данных для посещений
-INSERT INTO visit (client_id, training_id, visit_date, calories_burned)
-VALUES
-    (1, 1, CURRENT_DATE, 300),
-    (2, 2, CURRENT_DATE - INTERVAL '10 days', 200),
-    (1, 2, CURRENT_DATE - INTERVAL '5 days_
+--INSERT INTO visit (client_id, training_id, visit_date, calories_burned)
+--VALUES
+--    (1, 1, CURRENT_DATE, 300),
+--    (2, 2, CURRENT_DATE - INTERVAL '10 days', 200),
+--    (1, 2, CURRENT_DATE - INTERVAL '5 days', 200)
