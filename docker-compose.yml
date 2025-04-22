@@ -21,3 +21,17 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "8081:80"
+  fitness-app:
+    build:
+      context: .               # корень проекта, где лежит Dockerfile
+      dockerfile: Dockerfile   # ваш многоступенчатый Dockerfile
+    image: hpclab/fitness-tracker:latest
+    container_name: fitnesstracker_app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/fitnesstrackerdb
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
