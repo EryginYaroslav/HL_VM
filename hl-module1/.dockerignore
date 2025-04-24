@@ -1,0 +1,13 @@
+# Не отправлять в контекст сборки PostgreSQL-данные
+data/
+docker-entrypoint-initdb.d/
+
+# Артефакты сборки Gradle (не обязательно, но ускорит билд)
+build/
+.gradle
+gradle/
+gradlew
+gradlew.bat
+
+# Система контроля версий
+.git

@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  
+  # 1) Основной CRUD-сервис (hl-module1)
+  crud-service:
+    build:
+      context: ./hl-module1
+      dockerfile: Dockerfile
+    image: hpclab/fitness-tracker:latest
+    container_name: crud_service
+    ports:
+      - "8080:8080"
+    cpus: 1.0
+    environment:
+      # эти переменные прокидываются в application.properties
+      DB_HOST: 10.60.3.26
+      DB_PORT: 5432
+      DB_NAME: yarbd
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+
+  # 2) Additional Service
+  additional-service:
+    build:
+      context: ./hl-additional-service
+      dockerfile: Dockerfile
+    image: hpclab/hl-additional-service:latest
+    container_name: additional_service
+    ports:
+      - "8081:8081"
+    cpus: 0.5
+    environment:
+      # URL на CRUD-сервис по имени сервиса в сети compose
+      CRUD_SERVICE_URL: http://crud-service:8080
+    depends_on:
+      - crud-service
