@@ -1,22 +1,32 @@
-// src/main/java/ru/hpclab/hl/additional/model/VisitDto.java
 package ru.hpclab.hl.additional.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDate;
 
+/**
+ * DTO для JSON от /api/visit — 
+ * соответствует структуре:
+ * {
+ *   "client": { "id": ..., "fullName": ... , … },
+ *   "training": { … },
+ *   "visitDate": "...",
+ *   "caloriesBurned": ...
+ * }
+ */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VisitDto {
-    private Long clientId;
+    private ClientDto client;
     private LocalDate visitDate;
     private int caloriesBurned;
-    // конструктор по умолчанию, геттеры/сеттеры
 
     public VisitDto() {}
 
-    public Long getClientId() {
-        return clientId;
+    public ClientDto getClient() {
+        return client;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setClient(ClientDto client) {
+        this.client = client;
     }
 
     public LocalDate getVisitDate() {
@@ -35,3 +45,4 @@ public class VisitDto {
         this.caloriesBurned = caloriesBurned;
     }
 }
+

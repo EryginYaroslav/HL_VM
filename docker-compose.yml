@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  
   # 1) Основной CRUD-сервис (hl-module1)
   crud-service:
     build:
@@ -11,7 +10,7 @@ services:
     container_name: crud_service
     ports:
       - "8080:8080"
-    cpus: 1.0
+    cpus: 0.5
     environment:
       # эти переменные прокидываются в application.properties
       DB_HOST: 10.60.3.26

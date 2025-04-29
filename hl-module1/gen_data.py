@@ -13,7 +13,7 @@ TRAINING_TYPES = ["бег", "йога", "велосипед", "силовая", 
 DIFFICULTIES   = ["легкая", "средняя", "сложная"]
 
 def clear_all():
-    resp = requests.delete(f"{BASE_URL}/clear")
+    resp = requests.delete(f"{BASE_URL}/admin/clear")
     resp.raise_for_status()
 
 def generate_client():

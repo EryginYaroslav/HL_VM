@@ -1,36 +1,31 @@
-package ru.hpclab.hl.module1.configuration;
+package ru.hpclab.hl.additional.configuration;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.hpclab.hl.module1.model.User;
-import ru.hpclab.hl.module1.repository.UserRepository;
-import ru.hpclab.hl.module1.service.StatisticsService;
-import ru.hpclab.hl.module1.service.UserService;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
-import java.util.UUID;
+import java.util.concurrent.Executor;
 
 @Configuration
+@EnableScheduling
+@EnableAsync
 public class ServicesConfig {
-
-    @Bean
-    UserService userService(UserRepository userRepository) {
-        UserService userService = new UserService(userRepository);
-        for (int i = 0; i < 5; i++) {
-            userRepository.save(new User(UUID.randomUUID(), "new super user"));
-        }
-        return userService;
+    /**
+     * Пул потоков для @Async-методов (applicationTaskExecutor).
+     */
+    @Bean(name = "applicationTaskExecutor")
+    public Executor applicationTaskExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(2);
+        executor.setMaxPoolSize(5);
+        executor.setQueueCapacity(50);
+        executor.setThreadNamePrefix("async-exec-");
+        executor.initialize();
+        return executor;
     }
 
-    @Bean
-    @ConditionalOnProperty(prefix = "statistics", name = "service", havingValue = "console2000")
-    StatisticsService statisticsService2000(UserService userService){
-        return new StatisticsService(2000, userService);
-    }
-
-    @Bean
-    @ConditionalOnProperty(prefix = "statistics", name = "service", havingValue = "console1000")
-    StatisticsService statisticsService1000(UserService userService){
-        return new StatisticsService(1000, userService);
-    }
 }
+
